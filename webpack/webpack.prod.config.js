@@ -1,6 +1,78 @@
-const common = require('./webpack.common.config.js')
-const { merge } = require('webpack-merge') 
+const common = require("./webpack.common.config.js");
+const path = require("path");
+const glob = require("glob");
+const { merge } = require("webpack-merge");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 
 module.exports = merge(common, {
-    mode: 'production'
-})
+  mode: "production",
+  output: {
+    filename: "js/[name].[contenthash:8].js",
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      "...",
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            "default",
+            {
+              discardComments: {
+                removeAll: true,
+              },
+            },
+          ],
+        },
+      }),
+    ],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        exclude: /\.module.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.module.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[hash:base64]",
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
+      },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name].[contenthash:8].css",
+    }),
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${path.join(__dirname, "../src")}/**/*`, {
+        nodir: true,
+      }),
+    }),
+  ],
+});
