@@ -4,15 +4,21 @@
   "description": "Webpack 5 in 2022: Optimizing For Production",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack/webpack.prod.config.js",
-    "dev": "webpack serve --config webpack/webpack.dev.config.js --hot"
+    "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.config.js",
+    "dev": "cross-env NODE_ENV=dev webpack serve --config webpack/webpack.dev.config.js --hot",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Kuldeep Singh",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/plugin-proposal-pipeline-operator": "^7.18.9",
+    "@babel/preset-env": "^7.19.1",
     "autoprefixer": "^10.4.11",
+    "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "core-js": "^3.25.2",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.1.0",
     "html-loader": "^4.1.0",
@@ -31,7 +37,11 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.18.6",
     "@emotion/css": "^11.10.0",
-    "bootstrap": "^5.2.1"
+    "bootstrap": "^5.2.1",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.21",
+    "typescript": "^4.8.3"
   }
 }
