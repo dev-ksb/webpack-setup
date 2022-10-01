@@ -8,6 +8,7 @@ const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
+  // devtool: "source-map",
   output: {
     filename: "js/[name].[contenthash:8].js",
   },
