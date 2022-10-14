@@ -7,10 +7,12 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 
 module.exports = merge(common, {
+  entry: "./src/js/index.js",
   mode: "production",
   // devtool: "source-map",
   output: {
     filename: "js/[name].[contenthash:8].js",
+    publicPath: "/static/",
   },
   optimization: {
     minimize: true,

@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const config = {
-  entry: "./src/js/index.js",
   output: {
     path: path.resolve(__dirname, "../dist"),
     // clean: true,
