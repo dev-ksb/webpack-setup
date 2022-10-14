@@ -6,7 +6,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.config.js",
     "dev": "cross-env NODE_ENV=dev webpack serve --config webpack/webpack.dev.config.js --hot",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "bundle-analyzer":"NODE_ENV=production webpack --config webpack/webpack.analyze.config.js"
   },
   "keywords": [],
   "author": "Kuldeep Singh",
@@ -33,6 +34,7 @@
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0",
     "webpack-merge": "^5.8.0"
@@ -42,7 +44,8 @@
     "@emotion/css": "^11.10.0",
     "bootstrap": "^5.2.1",
     "cross-env": "^7.0.3",
-    "lodash": "^4.17.21",
+    "jquery": "^3.6.1",
+    "lodash-es": "^4.17.21",
     "typescript": "^4.8.3"
   }
 }

@@ -29,6 +29,52 @@ module.exports = merge(common, {
         },
       }),
     ],
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+      maxSize: Infinity,
+      minSize: 2000,
+      // cacheGroups: {
+      //   node_modules: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     name(module) {
+      //       const packageName = module.context.match(
+      //         /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+      //       );
+      //       return packageName;
+      //     },
+      //     // name: "node_modules",
+      //   },
+      // },
+      // name(module, chunks, cacheGroupKey) {
+      //   const filePathAsArray = module.identifier().split("/");
+      //   return filePathAsArray[filePathAsArray.length - 1];
+      // },
+      cacheGroups: {
+        // jquery: {
+        //   test: /[\\/]node_modules[\\/]jquery[\\/]/,
+        //   priority: 2,
+        //   name: "jquery",
+        // },
+        lodash: {
+          test: /[\\/]node_modules[\\/]lodash-es[\\/]/,
+          priority: 2,
+          name: "lodash-es",
+        },
+        node_modules: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "node_modules",
+          chunks: "initial",
+        },
+        async: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "async",
+          name(module, chunks) {
+            return chunks.map((chunk) => chunk.name).join("-");
+          },
+        },
+      },
+    },
   },
   module: {
     rules: [
