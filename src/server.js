@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const expressStaticGzip = require("express-static-gzip");
 
 const app = express();
 
@@ -18,7 +19,13 @@ if (process.env.NODE_ENV === "dev") {
   app.use(webpackHotMiddleware(webpackCompiler));
 }
 
-app.use("/static", express.static(path.resolve(__dirname, "../dist")));
+app.use(
+  "/static",
+  expressStaticGzip(path.resolve(__dirname, "../dist"), {
+    enableBrotli: true,
+    orderPreference: ["gz", "br"],
+  })
+);
 app.get("/", (req, res) => {
   const absolutePathToHTML = path.resolve(__dirname, "../dist/index.html");
   res.sendFile(absolutePathToHTML);
